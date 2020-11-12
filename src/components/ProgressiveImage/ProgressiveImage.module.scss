@@ -1,0 +1,22 @@
+.container {
+  position: relative;
+  margin-bottom: 5%;
+
+  & > div img {
+    transition: opacity 250ms ease-in;
+    opacity: 1;
+  }
+
+  & > div {
+    height: 100% !important;
+    width: 100% !important;
+  }
+}
+
+.blur {
+  filter: blur(8px); 
+}
+
+.hidden {
+  opacity: 0 !important;
+}
