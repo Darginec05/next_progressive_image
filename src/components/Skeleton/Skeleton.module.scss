@@ -1,0 +1,21 @@
+.animation {
+  animation-duration: 1.5s;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  animation-name: placeload;
+  animation-timing-function: linear;
+  background: #f6f7f8;
+  background: #eeeeee;
+  background: linear-gradient(to right, #eeeeee 8%, #dddddd 18%, #eeeeee 33%);
+  background-size: 1200px 104px;
+  position: relative;
+
+  @keyframes placeload {
+    from {
+      background-position: -468px 0;
+    }
+    to {
+      background-position: 468px 0;
+    }
+  }
+}

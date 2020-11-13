@@ -3,6 +3,8 @@ import { memo, ReactElement, useMemo, useState } from 'react';
 import Image from 'next/image';
 import cx from 'classnames';
 
+import { Skeleton } from '../Skeleton';
+
 import styles from './ProgressiveImage.module.scss';
 
 type ImageProps = {
@@ -15,6 +17,7 @@ const isNumber = (value: unknown): boolean => typeof value === 'number';
 
 const ProgressiveImageRender = ({ src, height, width }: ImageProps): ReactElement => {
   const [isLoaded, setLoaded] = useState<boolean>(false);
+  const [isBlurLoaded, setBlurLoaded] = useState<boolean>(false);
 
   const getBlurDimensions = useMemo(() => {
     const _w: number = isNumber(width) ? +width / 30 : 5;
@@ -25,14 +28,15 @@ const ProgressiveImageRender = ({ src, height, width }: ImageProps): ReactElemen
 
   return (
     <div style={{ width, height, minHeight: height }} className={styles.container}>
+      {!isBlurLoaded && <Skeleton style={{ width, height }} />}
       <Image
         src={src}
         layout="fixed"
         quality={1}
-        priority
-        {...getBlurDimensions}
         className={cx(styles.blur)}
         alt={`blur_${src}`}
+        onLoad={() => setBlurLoaded(true)}
+        {...getBlurDimensions}
       />
       <Image
         src={src}
