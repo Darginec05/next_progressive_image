@@ -19,24 +19,30 @@ const ProgressiveImageRender = ({ src, height, width }: ImageProps): ReactElemen
   const [isLoaded, setLoaded] = useState<boolean>(false);
   const [isBlurLoaded, setBlurLoaded] = useState<boolean>(false);
 
-  const getBlurDimensions = useMemo(() => {
+  const blurDimensions = useMemo(() => {
     const _w: number = isNumber(width) ? +width / 30 : 5;
     const _h: number = isNumber(height) ? +height / 30 : 5;
 
     return { width: _w, height: _h };
   }, [width, height]);
 
+  const wrapperStyles = useMemo(() => ({
+    width,
+    height,
+    minHeight: height,
+  }), [width, height]);
+
   return (
-    <div style={{ width, height, minHeight: height }} className={styles.container}>
+    <div style={wrapperStyles} className={styles.container}>
       {!isBlurLoaded && <Skeleton style={{ width, height }} />}
       <Image
         src={src}
         layout="fixed"
         quality={1}
-        className={cx(styles.blur)}
+        className={cx(styles.blur, { [styles.hidden]: !isBlurLoaded })}
         alt={`blur_${src}`}
         onLoad={() => setBlurLoaded(true)}
-        {...getBlurDimensions}
+        {...blurDimensions}
       />
       <Image
         src={src}
